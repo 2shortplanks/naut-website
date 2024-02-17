@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [ ! -d "/Users/markfowler/Obsidian/MyVault/MyVault/Naut" ]; then
+    cat <<ERRORMSG
+ERROR: Markdown directory doesn't exist.
+
+Naut needs a directory of markdown to turn into the website, and it can't find
+it at the location you specified during setup.  The location is:
+
+/Users/markfowler/Obsidian/MyVault/MyVault/Naut
+
+Please see http://naut.twoshortplanks.com/err/no-markdown for more information.
+
+ERRORMSG
+    exit 1
+fi
+
+if [ ! -d "/Users/markfowler/.ssh" ]; then
+    cat <<ERRORMSG
+ERROR: ~/.ssh doesn't exist.
+
+Naut deploys to GitHub pages by committing the website it creates to
+a git repository.  In order for this to work it needs you to have setup
+a ssh key that can access the repository.  Even though we checked for .ssh
+when we did setup, that file's no longer there now!
+
+See http://naut.twoshortplanks.com/err/ssh for more information.
+
+ERRORMSG
+    exit 1
+fi
+
+
+if [ ! -f "/Users/markfowler/.gitconfig" ]; then
+    cat <<ERRORMSG
+ERROR: ~/.gitconfig doesn't exist.
+
+Naut deploys to GitHub pages by committing the website it creates to
+a git repository.  In order for this to work it needs you to have setup
+a .gitconfig in your home directory.  Even though we checked for a .gitconfig
+when we did setup (or created one if it wasn't there), that file's no longer
+there now!
+
+See http://naut.twoshortplanks.com/err/gitconfig for more information.
+
+ERRORMSG
+    exit 1
+fi
+
+
+docker run \
+  --rm --name naut \
+  -v "/Users/markfowler"/.ssh:/root/.ssh \
+  -v "/Users/markfowler"/.gitconfig:/root/.gitconfig \
+  -v /Users/markfowler/co/naut-website:/root/checkout \
+  -v "/Users/markfowler/Obsidian/MyVault/MyVault/Naut":/root/checkout/markdown \
+  -it 2shortplanks/naut $@

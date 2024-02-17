@@ -1,0 +1,7 @@
+/* Below is global css that applies everywhere
+
+   This file is loaded from the Base.astro template (so if you stop using the
+   Base wrapper, then this file won't be loaded automatically).  See
+   http://naut.twoshortplanks.com/default-html for more information
+*/
+

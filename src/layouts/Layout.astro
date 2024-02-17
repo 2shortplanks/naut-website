@@ -1,0 +1,17 @@
+---
+// this is a default file.  You want to modify it!
+
+// info contains metadata about the page.
+// See http://naut.twoshortplanks.com/info for more information
+const { info } = Astro.props;
+
+// Base is the most basic wrapper templates that you can use to wrap your
+// markdown in really simple HTML.  It's one of the default files provided by
+// Naut.  You're not required to use it.
+// See http://naut.twoshortplanks.com/default-html for more information
+import Base from "./Base.astro";
+---
+
+<Base info={info}>
+	<slot/>
+</Base>
